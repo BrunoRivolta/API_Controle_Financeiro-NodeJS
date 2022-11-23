@@ -17,7 +17,7 @@ class ReceitasController {
 				if(resultadoBusca.length > 0)  {
 					res.status(200).json(resultadoBusca)  
 				} else {
-					res.status(204).json({'Busca': `Não foi encontrado resutado para: ${paramBusca}`})
+					res.status(204).json({Busca: `Não foi encontrado resutado para: ${paramBusca}`})
 				}
 			}
 		} catch (err) {
@@ -73,17 +73,25 @@ class ReceitasController {
 		const atualizacao = req.body
 		try{
 			await database.Receitas.update(atualizacao, { where: { id: Number(id) } })
-			return res.status(200).json({ mensagem: `A despesa ID: ${id}, foi atualizada`})
+			return res.status(200).json({ message: `A despesa ID: ${id}, foi atualizada`})
 		} catch (error) {
 			return res.status(500).json(error.message)
 		}
 	}
-
+	static async restauraReceita(req, res) {
+		const { id } = req.params
+		try {
+			await database.Receitas.restore({ where: { id: Number(id) } })
+			return res.status(200).json({message: `A receita id: ${id} foi restaurada com sucesso!`})
+		} catch (error) {
+			return res.status(500).json(error.message)
+		}
+	}
 	static async apagaReceita(req, res) {  
 		const { id } = req.params
 		try {
 			await database.Receitas.destroy( {where: { id: Number(id) } })
-			return res.status(200).json({ mensagem: `id ${id} deletado` })
+			return res.status(200).json({ message: `id ${id} deletado` })
 		} catch (error) {
 			return res.status(500).json(error.message)
 		}

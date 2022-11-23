@@ -1,15 +1,15 @@
 {
   "development": {
     "username": "root",
-    "password": "1111",
+    "password": "br260800",
     "database": "control_financeiro",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "database_test",
+    "password": "br260800",
+    "database": "control_finan_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

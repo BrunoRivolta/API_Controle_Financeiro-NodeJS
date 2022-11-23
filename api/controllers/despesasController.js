@@ -27,11 +27,11 @@ class DespesasController {
 	static async listaDespesaPorId(req, res) {
 		const { id } = req.params
 		try {
-			const despesa = await database.Despesas.findOne( { where: {id: Number(id)}})
+			const despesa = await database.Despesas.findOne({ where: { id: Number(id) } })
 			if (despesa != null) {
 				res.status(200).json(despesa)
 			} else {
-				res.status(200).json({message: `O id ${id}, não existe`})
+				res.status(200).json({ message: `O id ${id}, não existe` })
 			}
 		} catch (err) {
 			res.status(500).json({ message: err.message })
@@ -53,7 +53,7 @@ class DespesasController {
 			if(resultadoDespesas.length > 0)  {
 				res.status(200).json(resultadoDespesas)  
 			} else {
-				res.status(200).json({Busca: `Não foi encontrado resutado para: ${mes}/${ano}`})
+				res.status(200).json({ Busca: `Não foi encontrado resutado para: ${mes}/${ano}` })
 			}
 		} catch (err) {
 			res.status(500).json({ message: err.message })
@@ -73,17 +73,25 @@ class DespesasController {
 		const atualizacao = req.body
 		try{
 			await database.Despesas.update(atualizacao, { where: { id: Number(id) } })
-			return res.status(200).json({ mensagem: `A despesa ID: ${id}, foi atualizada`})
+			return res.status(200).json({ message: `A despesa ID: ${id}, foi atualizada`})
 		} catch (error) {
 			return res.status(500).json(error.message)
 		}
 	}
-
+	static async restauraDespesa(req, res) {
+		const { id } = req.params
+		try {
+			await database.Despesas.restore({ where: { id: Number(id) } })
+			return res.status(200).json({message: `A despesa id: ${id} foi restaurada com sucesso!`})
+		} catch (error) {
+			return res.status(500).json(error.message)
+		}
+	}
 	static async apagaDespesa(req, res) {  
 		const { id } = req.params
 		try {
 			await database.Despesas.destroy( {where: { id: Number(id) } })
-			return res.status(200).json({ mensagem: `id ${id} deletado` })
+			return res.status(200).json({ message: `id ${id} deletado` })
 		} catch (error) {
 			return res.status(500).json(error.message)
 		}

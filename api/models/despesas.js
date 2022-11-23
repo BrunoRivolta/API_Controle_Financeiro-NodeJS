@@ -10,17 +10,25 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
 		static associate(models) {
-			// define association here
+			Despesas.belongsTo(models.Categoria, { foreignKey: 'categoria_id' })
+			Despesas.belongsTo(models.Usuarios, { foreignKey: 'usuario_id' })
 		}
 	}
 	Despesas.init({
-		descricao: DataTypes.STRING,
+		descricao: {
+			type: DataTypes.STRING,                                    
+			validate: {
+				maisDe3Caracteres: function(dado) {
+					if (dado.length < 3) throw new Error('O campo deve ter mais de 3 caracteres')
+				}
+			}
+		},
 		valor: DataTypes.FLOAT,
 		data: DataTypes.DATE,
-		categoria: DataTypes.INTEGER
 	}, {
 		sequelize,
 		modelName: 'Despesas',
+		paranoid: true
 	})
 	return Despesas
 }

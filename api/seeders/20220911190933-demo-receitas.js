@@ -8,20 +8,17 @@ module.exports = {
 				descricao: 'Salario',
 				valor: 800.80,
 				data: 20220705,
-				createdAt: new Date(),
-				updatedAt: new Date()
+				usuario_id: 1,
 			},{
 				descricao: 'Adiantamento',
 				valor: 300.95,
 				data: 20220705,
-				createdAt: new Date(),
-				updatedAt: new Date()
+				usuario_id: 1,
 			},{
 				descricao: 'Vendas',
 				valor: 200.32,
 				data: 20220705,
-				createdAt: new Date(),
-				updatedAt: new Date()
+				usuario_id: 1,
 			},
 		], {})
 	},
