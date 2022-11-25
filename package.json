@@ -5,7 +5,7 @@
   "main": "./api/index.js",
   "scripts": {
     "start": "nodemon server.js",
-    "inspect": "nodemon --inspect ./api/app.js",
+    "inspect": "nodemon --inspect server.js",
     "test": "node node_modules/jest/bin/jest.js --detectOpenHandles --forceExit --maxWorkers=1 --verbose",
     "test:watch": "node node_modules/jest/bin/jest.js --detectOpenHandles --forceExit --maxWorkers=1 --watchAll",
     "test:coverage": "node node_modules/jest/bin/jest.js --detectOpenHandles --forceExit --maxWorkers=1 --coverage"
