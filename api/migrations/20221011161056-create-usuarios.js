@@ -30,6 +30,11 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.DATE,
 				defaultValue: Sequelize.literal('now()')
+			},
+			emailVerificado: {
+				allowNull: false,
+				type: Sequelize.BOOLEAN,
+				defaultValue: Sequelize.literal('0')
 			}
 		})
 	},

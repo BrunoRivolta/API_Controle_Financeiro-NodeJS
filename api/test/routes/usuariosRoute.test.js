@@ -28,7 +28,7 @@ describe('POST em /usuarios/login', () => {
 					'senha': '123456'
 				}
 			)
-			.expect(204)
+			.expect(200)
 			
 		token = resposta.headers.authorization
 	})
@@ -41,7 +41,7 @@ describe('GET em /usuarios', () => {
 			.expect(200) 
 
 		primeiroId = resposta.body[0].id
-		expect(resposta.body[0].nome).toEqual('Jest')
+		expect(resposta.body[0].nome).toEqual('Teste Unitário')
 	})
 })
 
@@ -65,10 +65,11 @@ describe('POST em /usuarios/', () => {
 				{
 					'email': 'teste@teste.com',
 					'nome': 'Usuario Teste',
-					'senha': '123456'
+					'senha': '123456',
+					'emailVerificado': 1
 				}
 			)
-			.expect(200)
+			.expect(201)
 
 		id = resposta.body.id
 	})
@@ -79,21 +80,9 @@ describe('PUT em /usuarios/id', () => {
 		const resposta = await request(app)
 			.put(`/usuarios/${id}`)
 			.set('Authorization', 'Bearer ' + token)
-			.send({ nome: 'usuario teste atualizado' })
+			.send({ nome: 'Apagar Registro' })
 
 		expect(resposta.body.message).toEqual(`O usuario ID: ${id}, foi atualizada`)
-	})
-})
-
-describe('DELETE em /usuario/id', () => {
-	it('Deve apagar um usuario', async () => {
-		const resposta = await request(app)
-			.delete(`/usuarios/${id}`)
-			.set('Authorization', 'Bearer ' + token)
-
-			.expect(200)
-
-		expect(resposta.body.message).toBe(`Usuario id ${id} deletado junto com todos seus registros`)		
 	})
 })
 

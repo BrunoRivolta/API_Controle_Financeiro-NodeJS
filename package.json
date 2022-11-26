@@ -6,9 +6,9 @@
   "scripts": {
     "start": "nodemon server.js",
     "inspect": "nodemon --inspect server.js",
-    "test": "node node_modules/jest/bin/jest.js --detectOpenHandles --forceExit --maxWorkers=1 --verbose",
-    "test:watch": "node node_modules/jest/bin/jest.js --detectOpenHandles --forceExit --maxWorkers=1 --watchAll",
-    "test:coverage": "node node_modules/jest/bin/jest.js --detectOpenHandles --forceExit --maxWorkers=1 --coverage"
+    "test": "node node_modules/jest/bin/jest.js --forceExit --maxWorkers=1 --verbose",
+    "test:watch": "node node_modules/jest/bin/jest.js --forceExit --maxWorkers=1 --watchAll",
+    "test:coverage": "node node_modules/jest/bin/jest.js --forceExit --maxWorkers=1 --coverage"
   },
   "author": "Bruno Rivolta",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.4",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.8.0",
     "passport": "^0.6.0",
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",

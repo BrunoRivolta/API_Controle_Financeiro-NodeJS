@@ -29,7 +29,7 @@ describe('POST em /usuarios/login', () => {
 					'senha': '123456'
 				}
 			)
-			.expect(204)
+			.expect(200)
 			
 		token = resposta.headers.authorization
 	})
@@ -88,7 +88,7 @@ describe('POST em /receitas/', () => {
 			.send( 
 				{
 					descricao: 'teste',
-					valor: 11,
+					valor: 0,
 					data: '2022-07-08',
 					usuario_id: 1
 				}

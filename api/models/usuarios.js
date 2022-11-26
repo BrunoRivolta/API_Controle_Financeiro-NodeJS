@@ -33,7 +33,10 @@ module.exports = (sequelize, DataTypes) => {
 				}
 			}
 		},
-		senha: DataTypes.STRING
+		senha: DataTypes.STRING,
+		emailVerificado: {
+			type: DataTypes.BOOLEAN
+		}
 	}, {
 		sequelize,
 		modelName: 'Usuarios',

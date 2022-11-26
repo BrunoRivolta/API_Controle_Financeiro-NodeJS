@@ -22,7 +22,7 @@ describe('GET em /relatorio', () => {
 			.get('/relatorio')
 			.expect(200) 
 
-		expect(resposta.body[0].saldo).toEqual(400)
+		expect(resposta.body[0].saldo).toEqual(618.42)
 	})
 })
 
@@ -32,6 +32,6 @@ describe('GET em /relatorio/mes/ano', () => {
 			.get('/relatorio/07/2022')
 			.expect(200)
 
-		expect(resposta.body.receitas).toEqual(1000)
+		expect(resposta.body.receitas).toEqual(1302.07)
 	})
 })
