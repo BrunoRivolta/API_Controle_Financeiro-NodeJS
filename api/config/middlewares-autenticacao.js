@@ -2,7 +2,6 @@ const passport = require('passport')
 const database = require('../models')
 require('./estrategia-autenticacao')(passport)
 const tokens = require('../controllers/tokens')
-const { InternalServerError } = require('../erros')
 
 module.exports = {
 	local (req, res, next) {
@@ -74,9 +73,29 @@ module.exports = {
 	async verificacaoEmail(req, res, next) {
 		try {
 			const { token } = req.params
-			const id = await tokens .verificacaoEmail.verifica(token)
-			const usuario = await database.Usuarios.findOne( { where: {id: Number(id)}})
+			const id = await tokens.verificacaoEmail.verifica(token)
+			const usuario = await database.Usuarios.findOne( { where: { id: Number(id) }})
 			req.user = usuario
+			req.id = id
+			next()
+		} catch (erro) {
+			if (erro.name === 'JsonWebTokenError') {
+				return res.status(401).json({ erro: erro.message })
+			}
+			if (erro.name === 'TokenExpiredError') {
+				return res.status(401).json({ erro: erro.message, expiradoEm: erro.expiredAt })
+			}
+			return res.status(500)
+		}
+	},
+
+	async restauraContaEmail(req, res, next) {
+		try {
+			const { token } = req.params
+			const id = await tokens.recuperaConta.verifica(token)
+			const usuario = await database.Usuarios.findOne( { where: { id: Number(id) }})
+			req.user = usuario
+			req.id = id
 			next()
 		} catch (erro) {
 			if (erro.name === 'JsonWebTokenError') {

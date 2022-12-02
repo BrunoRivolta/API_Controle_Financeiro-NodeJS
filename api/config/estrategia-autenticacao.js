@@ -6,10 +6,9 @@ const passport = require('passport')
 const BearerStrategy = require('passport-http-bearer').Strategy
 const tokens = require('../controllers/tokens')
 
-
 function verificaUsuario(usuario) {
 	if(!usuario) {
-		throw new InvalidArgumentError('Nao existe usuario com este e-mail')
+		throw new InvalidArgumentError('Email ou senha invalidos')
 	}
 }
 
@@ -19,6 +18,14 @@ async function verificaSenha(senha, senhaHash) {
 		throw new InvalidArgumentError('Email ou senha invalidos')
 	}
 }
+
+async function vefiricaEmailValidado(usuario) {
+	const validado = usuario.emailVerificado
+	if (validado === false) {
+		throw new InvalidArgumentError('Email não foi validado, verifique sua caixa de e-mail')		
+	}
+}
+
 
 module.exports = function(passport) {
 	passport.use(
@@ -31,9 +38,10 @@ module.exports = function(passport) {
 				const usuario = await database.Usuarios.findOne({ where: { email: email } })
 				verificaUsuario(usuario)
 				await verificaSenha(senha, usuario.senha)
+				await vefiricaEmailValidado(usuario)
 				done(null, usuario)
 			} catch(erro) {
-				done()
+				done(erro)
 			}
 		})
 	)

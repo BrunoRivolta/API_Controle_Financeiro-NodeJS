@@ -94,7 +94,17 @@ module.exports = {
 	},
 	verificacaoEmail: {
 		nome: 'token de verificacao de e-mail',
-		expiracao: [30, 'm'],
+		expiracao: [6, 'h'],
+		cria(id) {
+			return criaTokenJWT(id, this.expiracao)
+		},
+		verifica(token) {
+			return verificaTokenJWT(token, this.nome)
+		}
+	},
+	recuperaConta: {
+		nome: 'token de recuperação de conta',
+		expiracao: [15, 'd'],
 		cria(id) {
 			return criaTokenJWT(id, this.expiracao)
 		},

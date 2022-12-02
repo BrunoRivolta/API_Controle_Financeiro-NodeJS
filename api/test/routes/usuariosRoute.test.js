@@ -15,85 +15,124 @@ afterEach(() => {
 	console.log('Servidor de testes desativado')
 })
 
-let primeiroId
-let token
+let usuarioCriado
+let accessToken
+
+function numero () {
+	const n = Math.floor(Math.random() * 99999);
+	return n
+}
+
+describe('POST em /usuarios/', () => {
+	it('Deve criar uma novo usuario', async () => {
+		const resposta = await request(app)
+			.post('/usuarios')
+			.send( 
+				{
+					email: `teste${numero()}@test.com`,
+					nome: 'UsuarioTeste',
+					senha: '123456',
+					emailVerificado: true
+				}
+			)
+			.expect(201)
+
+			usuarioCriado = resposta.body
+			expect(resposta.body.nome).toEqual('UsuarioTeste')
+	})
+})
 
 describe('POST em /usuarios/login', () => {
-	it('Deve fazer o login na aplicação e gerar um token', async () => {
+	it('Deve impedir login com dados (email/senha) errados', async () => {
 		const resposta = await request(app)
 			.post('/usuarios/login')
 			.send(
 				{
-					'email': 'usuario@deteste.com',
+					'email': `xxxxx@xxxx.com`,
+					'senha': 'xxxxxx'
+				}
+			)
+			.expect(401)
+			
+			expect(resposta.body.erro).toEqual('Email ou senha invalidos')
+	})
+
+	it('Deve fazer o login na aplicação e gerar um accessToken', async () => {
+		const resposta = await request(app)
+			.post('/usuarios/login')
+			.send(
+				{
+					'email': `${usuarioCriado.email}`,
 					'senha': '123456'
 				}
 			)
 			.expect(200)
 			
-		token = resposta.headers.authorization
+			accessToken = resposta.headers.authorization
 	})
 })
 
-describe('GET em /usuarios', () => {
-	it('GET em /usuarios - Deve retornar uma lista de usuarios', async () => {
+describe('POST em /usuarios/atualiza_refresh', () => {
+	it('Deve recusar um refresToken invalido', async () => {
 		const resposta = await request(app)
-			.get('/usuarios')
-			.expect(200) 
+			.post(`/usuarios/atualiza_refresh`)
+			.send({ refreshToken: "xxxxxxxx" })
+			.expect(401)
 
-		primeiroId = resposta.body[0].id
-		expect(resposta.body[0].nome).toEqual('Teste Unitário')
+		expect(resposta.body.erro).toEqual("Refresh Token é invalido!")
 	})
 })
 
-describe('GET em /usuarios/id', () => {
-	it('GET em /usuarios/id - Deve retornar um usuario', async () => {
+describe('GET em /usuarios/verifica_email/:token', () => {
+	it('Deve recusar um token de verificação de e-mail invalido', async () => {
 		const resposta = await request(app)
-			.get(`/usuarios/${primeiroId}`)
-			.expect(200)
+			.get(`/usuarios/verifica_email/eyJhbGciOiJIUzI1`)
+			.expect(401)
 
-		expect(resposta.body.email).toEqual('usuario@deteste.com')
+		expect(resposta.body.erro).toEqual("jwt malformed")
 	})
 })
 
-let id
-
-describe('POST em /usuarios/', () => {
-	it('Deve adicionar uma novo usuario', async () => {
+describe('GET em /usuarios/restaura_usuario/:token', () => {
+	it('Deve recusar um token de recuparação de usuário invalido', async () => {
 		const resposta = await request(app)
-			.post('/usuarios')
-			.send( 
-				{
-					'email': 'teste@teste.com',
-					'nome': 'Usuario Teste',
-					'senha': '123456',
-					'emailVerificado': 1
-				}
-			)
-			.expect(201)
+			.get('/usuarios/restaura_usuario/eyJhbGciOiJIUz')
+			.expect(401)
 
-		id = resposta.body.id
+		expect(resposta.body.erro).toEqual("jwt malformed")
 	})
 })
 
-describe('PUT em /usuarios/id', () => {
+describe('PUT em /usuarios/', () => {
 	it('Deve atualizar um usuario', async () => {
 		const resposta = await request(app)
-			.put(`/usuarios/${id}`)
-			.set('Authorization', 'Bearer ' + token)
+			.put(`/usuarios/`)
+			.set('Authorization', 'Bearer ' + accessToken)
 			.send({ nome: 'Apagar Registro' })
+			.expect(200)
 
-		expect(resposta.body.message).toEqual(`O usuario ID: ${id}, foi atualizada`)
+		expect(resposta.body.message).toEqual('Atualizado com sucesso!')
 	})
 })
 
-describe('POST em /usuarios/id/restaura', () => {
-	it('Restaura um usuario deletado', async () => {
+describe('GET em /usuarios/logout', () => {
+	it('Deve impedir o logout que não contenha accessToken e refreshToken', async () => {
 		const resposta = await request(app)
-			.post(`/usuarios/${id}/restaura`)
-			.set('Authorization', 'Bearer ' + token)
+			.get('/usuarios/logout')
+			.expect(401)
+
+		expect(resposta.body.erro).toEqual("Refresh Token não enviado!")
+	})
+})
+
+describe('DELETE em /usuarios/', () => {
+	it('Deve apagar um usuario', async () => {
+		const resposta = await request(app)
+			.delete(`/usuarios/`)
+			.set('Authorization', 'Bearer ' + accessToken)
 			.expect(200)
 
-		expect(resposta.body.message).toEqual(`o usuario id: ${id} foi restaurada com sucesso!`)
+		expect(resposta.body.message).toEqual('Usuario apagado')
 	})
 })
 

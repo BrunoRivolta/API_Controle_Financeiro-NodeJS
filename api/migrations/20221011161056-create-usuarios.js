@@ -11,7 +11,8 @@ module.exports = {
 			},
 			email: {				
 				allowNull: false,
-				type: Sequelize.STRING
+				type: Sequelize.STRING,
+				unique: true
 			},
 			nome: {
 				allowNull: false,
@@ -20,6 +21,11 @@ module.exports = {
 			senha: {
 				allowNull: false,
 				type: Sequelize.STRING
+			},
+			emailVerificado: {
+				allowNull: false,
+				type: Sequelize.BOOLEAN,
+				defaultValue: Sequelize.literal('0')
 			},
 			createdAt: {
 				allowNull: false,
@@ -31,10 +37,9 @@ module.exports = {
 				type: Sequelize.DATE,
 				defaultValue: Sequelize.literal('now()')
 			},
-			emailVerificado: {
-				allowNull: false,
-				type: Sequelize.BOOLEAN,
-				defaultValue: Sequelize.literal('0')
+			deletedAt: {
+				allowNull: true,
+				type: Sequelize.DATE,
 			}
 		})
 	},

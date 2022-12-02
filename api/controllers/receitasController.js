@@ -1,11 +1,13 @@
 const database = require('../models')
 
 class ReceitasController {
+
 	static async listaReceitas(req, res) {
+		const userId = req.user.id
 		const paramBusca = req.query.busca
 		const resultadoBusca = []
 		try {
-			const receitas = await database.Receitas.findAll()
+			const receitas = await database.Receitas.findAll({ where: { usuario_id: Number(userId) } })
 			if (paramBusca === undefined) {
 				res.status(200).json(receitas) 
 			} else {
@@ -24,26 +26,15 @@ class ReceitasController {
 			res.status(500).json({ message: err.message })
 		}
 	}
-	static async listaReceitaPorId(req, res) {
-		const { id } = req.params
-		try {
-			const receita = await database.Receitas.findOne( { where: {id: Number(id)}})
-			if (receita != null) {
-				res.status(200).json(receita)
-			} else {
-				res.status(200).json( {message: `O id ${id}, não existe`} )
-			}
-		} catch (err) {
-			res.status(500).json({ message: err.message })
-		}
-	}
+
 	static async listaReceitasPorMesEAno(req, res) {
+		const userId = req.user.id
 		const mes = req.params.mes
 		const ano = req.params.ano
 		const data = `${ano}-${mes}`
 		const resultadoReceitas = []
 		try {
-			const receitas = await database.Receitas.findAll()
+			const receitas = await database.Receitas.findAll({ where: { usuario_id: Number(userId) } })
 			for (let i = 0; i < receitas.length; i++) {
 				let dataAtual = (JSON.stringify(receitas[i].data)).slice(1,8)
 				if (dataAtual === data) {
@@ -59,39 +50,36 @@ class ReceitasController {
 			res.status(500).json({ message: err.message })
 		}
 	}
+
 	static async adicionarReceita(req, res) {
+		const dadosNovaReceita = req.body
+		dadosNovaReceita.usuario_id = req.user.id
 		try{
-			const dadosNovaReceita = req.body
-			const novaReceita = await database.Receitas.create(dadosNovaReceita)
-			res.status(200).json(novaReceita)
+			const receita = await database.Receitas.create(dadosNovaReceita)
+			res.status(200).json(receita)
 		} catch(err) {
 			res.status(500).json({ message: err.message })
 		}
 	}
+
 	static async atualizaReceita(req, res) {
 		const { id } = req.params
+		const userId = req.user.id
 		const atualizacao = req.body
 		try{
-			await database.Receitas.update(atualizacao, { where: { id: Number(id) } })
-			return res.status(200).json({ message: `A despesa ID: ${id}, foi atualizada`})
+			await database.Receitas.update(atualizacao, { where: { id: Number(id), usuario_id: Number(userId) } })
+			return res.status(200).json({ message: 'Receita atualizada' })
 		} catch (error) {
 			return res.status(500).json(error.message)
 		}
 	}
-	static async restauraReceita(req, res) {
-		const { id } = req.params
-		try {
-			await database.Receitas.restore({ where: { id: Number(id) } })
-			return res.status(200).json({message: `A receita id: ${id} foi restaurada com sucesso!`})
-		} catch (error) {
-			return res.status(500).json(error.message)
-		}
-	}
+
 	static async apagaReceita(req, res) {  
 		const { id } = req.params
+		const userId = req.user.id
 		try {
-			await database.Receitas.destroy( {where: { id: Number(id) } })
-			return res.status(200).json({ message: `id ${id} deletado` })
+			await database.Receitas.destroy( {where: { id: Number(id), usuario_id: Number(userId) } })
+			return res.status(200).json({ message: 'Receita deletada' })
 		} catch (error) {
 			return res.status(500).json(error.message)
 		}

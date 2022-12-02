@@ -24,11 +24,10 @@ module.exports = (sequelize, DataTypes) => {
 			}
 		},
 		valor: DataTypes.FLOAT,
-		data: DataTypes.DATE,
+		data: DataTypes.DATE
 	}, {
 		sequelize,
-		modelName: 'Despesas',
-		paranoid: true
+		modelName: 'Despesas'
 	})
 	return Despesas
 }

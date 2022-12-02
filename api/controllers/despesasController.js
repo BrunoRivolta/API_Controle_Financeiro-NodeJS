@@ -1,11 +1,13 @@
 const database = require('../models')
 
+
 class DespesasController {
 	static async listaDespesas(req, res) {
+		const userId = req.user.id
 		const paramBusca = req.query.busca
 		const resultadoBusca = []
 		try {
-			const despesas = await database.Despesas.findAll()
+			const despesas = await database.Despesas.findAll({ where: { usuario_id: Number(userId) } })
 			if (paramBusca === undefined) {
 				res.status(200).json(despesas) 
 			} else {
@@ -24,26 +26,15 @@ class DespesasController {
 			res.status(500).json({ message: err.message })
 		}
 	}
-	static async listaDespesaPorId(req, res) {
-		const { id } = req.params
-		try {
-			const despesa = await database.Despesas.findOne({ where: { id: Number(id) } })
-			if (despesa != null) {
-				res.status(200).json(despesa)
-			} else {
-				res.status(200).json({ message: `O id ${id}, não existe` })
-			}
-		} catch (err) {
-			res.status(500).json({ message: err.message })
-		}
-	}
+
 	static async listaDespesasPorMesEAno(req, res) {
+		const userId = req.user.id
 		const mes = req.params.mes
 		const ano = req.params.ano
 		const data = `${ano}-${mes}`
 		const resultadoDespesas = []
 		try {
-			const despesas = await database.Despesas.findAll()
+			const despesas = await database.Despesas.findAll({ where: { usuario_id: Number(userId) } })
 			for (let i = 0; i < despesas.length; i++) {
 				let dataAtual = (JSON.stringify(despesas[i].data)).slice(1,8)
 				if (dataAtual === data) {
@@ -59,39 +50,42 @@ class DespesasController {
 			res.status(500).json({ message: err.message })
 		}
 	}
+	
 	static async adicionarDespesa(req, res) {
+		const userId = req.user.id
+		const dadosNovaDespesa = req.body
+		dadosNovaDespesa.usuario_id = userId
+		
+		if (dadosNovaDespesa.categoria_id > 8 || dadosNovaDespesa.categoria_id < 1 || dadosNovaDespesa.categoria_id === null) {
+			dadosNovaDespesa.categoria_id = 8
+		}
+
 		try{
-			const dadosNovaDespesa = req.body
-			const novaDespesa = await database.Despesas.create(dadosNovaDespesa)
-			res.status(200).json(novaDespesa)
+			const despesa = await database.Despesas.create(dadosNovaDespesa)
+			res.status(200).json(despesa)
 		} catch(err) {
 			res.status(500).json({ message: err.message })
 		}
 	}
+
 	static async atualizaDespesa(req, res) {
+		const userId = req.user.id
 		const { id } = req.params
 		const atualizacao = req.body
 		try{
-			await database.Despesas.update(atualizacao, { where: { id: Number(id) } })
-			return res.status(200).json({ message: `A despesa ID: ${id}, foi atualizada`})
+			await database.Despesas.update(atualizacao, { where: { id: Number(id), usuario_id: Number(userId) } })
+			return res.status(200).json({ message: 'Despesa Atualizada'})
 		} catch (error) {
 			return res.status(500).json(error.message)
 		}
 	}
-	static async restauraDespesa(req, res) {
-		const { id } = req.params
-		try {
-			await database.Despesas.restore({ where: { id: Number(id) } })
-			return res.status(200).json({message: `A despesa id: ${id} foi restaurada com sucesso!`})
-		} catch (error) {
-			return res.status(500).json(error.message)
-		}
-	}
+
 	static async apagaDespesa(req, res) {  
 		const { id } = req.params
+		const userId = req.user.id
 		try {
-			await database.Despesas.destroy( {where: { id: Number(id) } })
-			return res.status(200).json({ message: `id ${id} deletado` })
+			await database.Despesas.destroy( {where: { id: Number(id), usuario_id: Number(userId) } })
+			return res.status(200).json({ message: 'Despesa apagada' })
 		} catch (error) {
 			return res.status(500).json(error.message)
 		}

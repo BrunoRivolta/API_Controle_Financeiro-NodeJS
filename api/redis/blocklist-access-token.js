@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken')
 const { createHash } = require('crypto')
 const manipulaLista = require('./manipula-lista')
-const redis =  require('redis')
+const redis = require('redis')
 
-const blocklist = redis.createClient({ prefix: 'blocklist-acessToken:'})
+const blocklist = redis.createClient({ prefix: 'blocklist-acessToken: ', legacyMode: true})
 const manipulaBlockList = manipulaLista(blocklist)
 
 function geraTokenHash (token) { //os tokens tem varios tamanho, essa funcao transforma o token em um hash com tamanho fixo

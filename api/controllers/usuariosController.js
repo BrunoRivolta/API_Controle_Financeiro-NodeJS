@@ -1,12 +1,9 @@
 const database = require('../models')
 const tokens = require('./tokens')
-const { EmailVerificacao } = require('../verifEmail/email')
+const { EmailVerificacao, EmailRecuperacao } = require('../verifEmail/email')
 const geraSenhaHash = require('./senhaHash')
+const geraEndereco = require('../verifEmail/geraEndereco')
 
-function geraEndereco(rota, token) {
-	const baseURL = process.env.BASE_URL
-	return `${baseURL}${rota}${token}`
-}
 
 class UsuariosController {
 
@@ -35,32 +32,9 @@ class UsuariosController {
 		const id = req.user.id
 		try {
 			await database.Usuarios.update({emailVerificado: true}, { where: { id: Number(id) } })
-			res.status(200).json()
+			res.status(200).json({ email: verificado })
 		} catch (erro) {
 			res.status(500).json({ erro: erro.message})
-		}
-	}
-
-	static async listaUsuarios(req, res) {
-		try {
-			const usuarios = await database.Usuarios.findAll()
-			res.status(200).json(usuarios) 
-		} catch (err) {
-			res.status(500).json({ message: err.message })
-		}
-	}
-
-	static async listaUsuarioPorId(req, res) {
-		const { id } = req.params
-		try {
-			const usuario = await database.Usuarios.findOne( { where: {id: Number(id)}})
-			if (usuario != null) {
-				res.status(200).json(usuario)
-			} else {
-				res.status(200).json({message: `O id ${id}, não existe`})
-			}
-		} catch (err) {
-			res.status(500).json({ message: err.message })
 		}
 	}
 
@@ -72,47 +46,50 @@ class UsuariosController {
 			const usuario = await database.Usuarios.create(dadosNovoUsuario)
 
 			const tokenVerificaEmail = tokens.verificacaoEmail.cria(usuario.id)
-			const endereco = geraEndereco('/usuario/verifica_email/', tokenVerificaEmail)
+			const endereco = geraEndereco('/usuarios/verifica_email/', tokenVerificaEmail)
 			const emailVerificacao = new EmailVerificacao(usuario, endereco)
 			emailVerificacao.enviaEmail()
 
-			res.status(201).json()
+			res.status(201).json(usuario)
 		} catch(err) {
 			res.status(500).json({ message: err.message })
 		}
 	}
 
 	static async atualizaUsuario(req, res) {
-		const { id } = req.params
+		const id = req.user.id
 		const atualizacao = req.body
 		try{
 			await database.Usuarios.update(atualizacao, { where: { id: Number(id) } })
-			return res.status(200).json({ message: `O usuario ID: ${id}, foi atualizada`})
+			return res.status(200).json({ message: 'Atualizado com sucesso!' })
 		} catch (error) {
 			return res.status(500).json(error.message)
 		}
 	}
 
-	static async apagaUsuario(req, res) {  
-		const { id } = req.params
+	static async apagaUsuario(req, res) { 
+		const usuario = req.user
+		const id = req.user.id
 		try {
-			database.sequelize.transaction(async transacao => {
-				await database.Relatorio.destroy( {where: { usuario_id: Number(id) } }, {transaction: transacao})
-				await database.Receitas.destroy( {where: { usuario_id: Number(id) } }, {transaction: transacao})
-				await database.Despesas.destroy( {where: { usuario_id: Number(id) } }, {transaction: transacao})			
-				await database.Usuarios.destroy( {where: { id: Number(id) } }, {transaction: transacao})
-				return res.status(200).json({ message: `Usuario id ${id} deletado junto com todos seus registros` })
-			})
+			await database.Usuarios.destroy( {where: { id: Number(id) } })
+			const tokenRecuperaConta = tokens.recuperaConta.cria(id)
+			const endereco = geraEndereco('/usuarios/restaura_usuario/', tokenRecuperaConta)
+			const emailVerificacao = new EmailRecuperacao(usuario, endereco)
+			emailVerificacao.enviaEmail()
+
+			return res.status(200).json({ message: 'Usuario apagado' })
+
 		} catch (error) {
 			return res.status(500).json(error.message)
 		}
 	}
 
 	static async restauraUsuario(req, res) {
-		const { id } = req.params
+		const id = req.id
 		try {
-			await database.Usuarios.restore({ where: { id: Number(id) } })
-			return res.status(200).json({message: `o usuario id: ${id} foi restaurada com sucesso!`})
+			await database.Usuarios.restore({ where: { id: Number(id) }})
+
+			return res.status(200).json({message: 'Usuario restaurado(a) com sucesso!'})
 		} catch (error) {
 			return res.status(500).json(error.message)
 		}

@@ -1,5 +1,4 @@
 const bodyParser = require('body-parser')
-const categorias = require('./categoriaRoute')
 const despesas = require('./despesasRoute')
 const receitas = require('./receitasRoute')
 const relatorio = require('./relatoriosRoute')
@@ -9,7 +8,6 @@ const middlewaresAutenticacao = require('../config/middlewares-autenticacao')
 
 module.exports = app => {
 	app.use(bodyParser.json())
-	app.use(categorias)
 	app.use(despesas)
 	app.use(receitas)
 	app.use(relatorio)

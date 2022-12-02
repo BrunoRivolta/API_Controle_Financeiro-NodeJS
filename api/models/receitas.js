@@ -26,8 +26,7 @@ module.exports = (sequelize, DataTypes) => {
 		data: DataTypes.DATE
 	}, {
 		sequelize,
-		modelName: 'Receitas',
-		paranoid: true
+		modelName: 'Receitas'
 	})
 	return Receitas
 }

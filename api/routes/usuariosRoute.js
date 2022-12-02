@@ -9,13 +9,10 @@ router
 	.post('/usuarios/atualiza_refresh', middlewaresAutenticacao.refresh ,UsuariosController.login)
 	.get('/usuarios/logout', [middlewaresAutenticacao.refresh, middlewaresAutenticacao.bearer] ,UsuariosController.logout)
 	.get('/usuarios/verifica_email/:token', middlewaresAutenticacao.verificacaoEmail, UsuariosController.verificaEmail)
-
-	.get('/usuarios', UsuariosController.listaUsuarios)
-	.get('/usuarios/:id', UsuariosController.listaUsuarioPorId)
+	.get('/usuarios/restaura_usuario/:token', middlewaresAutenticacao.verificacaoEmail, UsuariosController.restauraUsuario)
 	.post('/usuarios', UsuariosController.adicionarUsuario)
-	.post('/usuarios/:id/restaura', middlewaresAutenticacao.bearer, UsuariosController.restauraUsuario)
-	.put('/usuarios/:id', middlewaresAutenticacao.bearer, UsuariosController.atualizaUsuario)
-	.delete('/usuarios/:id', middlewaresAutenticacao.bearer, UsuariosController.apagaUsuario)
+	.put('/usuarios/', middlewaresAutenticacao.bearer, UsuariosController.atualizaUsuario) 
+	.delete('/usuarios/', middlewaresAutenticacao.bearer, UsuariosController.apagaUsuario) 
 
 module.exports = router
 

@@ -25,7 +25,7 @@ describe('POST em /usuarios/login', () => {
 			.post('/usuarios/login')
 			.send(
 				{
-					'email': 'usuario@deteste.com',
+					'email': 'usuario1@test.com',
 					'senha': '123456'
 				}
 			)
@@ -39,6 +39,7 @@ describe('GET em /despesas', () => {
 	it('Deve retornar uma lista de despesas', async () => {
 		const resposta = await request(app)
 			.get('/despesas')
+			.set('Authorization', 'Bearer ' + token)
 			.expect(200) 
 
 		primeiroId = resposta.body[0].id
@@ -46,20 +47,11 @@ describe('GET em /despesas', () => {
 	})
 })
 
-describe('GET em /despesas/id', () => {
-	it('Deve retornar uma despesa', async () => {
-		const resposta = await request(app)
-			.get(`/despesas/${primeiroId}`)
-			.expect(200)
-
-		expect(resposta.body.valor).toEqual(152.21)
-	})
-})
-
 describe('GET em /despesas?busca=Busca', () => {
 	it('Deve retornar despesas buscadas por uma descrição', async () => {
 		const resposta = await request(app)
 			.get('/despesas?busca=Farmacia')
+			.set('Authorization', 'Bearer ' + token)
 			.expect(200)
 
 		expect(resposta.body[0].descricao).toEqual('Farmacia')
@@ -69,10 +61,11 @@ describe('GET em /despesas?busca=Busca', () => {
 describe('GET em /despesas/mes/ano', () => {
 	it('Deve retornar uma lista de despesas de um mes e ano especifico', async () => {
 		const resposta = await request(app)
-			.get('/despesas/07/2022')
+			.get('/despesas/11/2022')
+			.set('Authorization', 'Bearer ' + token)
 			.expect(200)
 
-		expect(resposta.body[2].descricao).toEqual('Conta Internet')
+		expect(resposta.body[2].descricao).toEqual('Internet')
 	})
 })
 
@@ -104,7 +97,8 @@ describe('PUT em /despesas/id', () => {
 			.put(`/despesas/${id}`)
 			.send({ descricao: 'teste atualizado' })
 			.set('Authorization', 'Bearer ' + token)
-		expect(resposta.body.message).toEqual(`A despesa ID: ${id}, foi atualizada`)
+
+		expect(resposta.body.message).toEqual('Despesa Atualizada')
 	})
 })
 
@@ -115,17 +109,7 @@ describe('DELETE em /despesa/id', () => {
 			.set('Authorization', 'Bearer ' + token)
 			.expect(200)
 
-		expect(resposta.body.message).toBe(`id ${id} deletado`)		
+		expect(resposta.body.message).toBe('Despesa apagada')		
 	})
 })
 
-describe('POST em /despesas/id/restaura', () => {
-	it('Restaura uma despesa deletada', async () => {
-		const resposta = await request(app)
-			.post(`/despesas/${id}/restaura`)
-			.set('Authorization', 'Bearer ' + token)
-			.expect(200)
-
-		expect(resposta.body.message).toEqual(`A despesa id: ${id} foi restaurada com sucesso!`)
-	})
-})

@@ -16,16 +16,16 @@ afterEach(() => {
 	console.log('Servidor de testes desativado')
 })
 
-let primeiroId
 let token
 
+
 describe('POST em /usuarios/login', () => {
-	it('Deve fazer o login na aplicação e gerar um token', async () => {
+	it('Deve fazer o login na aplicação e gerar um accessToken', async () => {
 		const resposta = await request(app)
 			.post('/usuarios/login')
 			.send(
 				{
-					'email': 'usuario@deteste.com',
+					'email': `usuario1@test.com`,
 					'senha': '123456'
 				}
 			)
@@ -36,31 +36,30 @@ describe('POST em /usuarios/login', () => {
 })
 
 describe('GET em /receitas', () => {
+	it('Deve impedir o acesso de um token invalido', async () => {
+		const resposta = await request(app)
+			.get('/receitas')
+			.set('Authorization', 'Bearer ' + 'tokenInvalido')
+			.expect(401) 
+
+		expect(resposta.body.erro).toEqual("jwt malformed")
+	})
+
 	it('Deve retornar uma lista de receitas', async () => {
 		const resposta = await request(app)
 			.get('/receitas')
+			.set('Authorization', 'Bearer ' + token)
 			.expect(200) 
 
-		primeiroId = resposta.body[0].id
-		expect(resposta.body[0].descricao).toEqual('Salario')
+		expect(resposta.body[0].descricao).toEqual('Salário')
 	})
 })
-
-describe('GET em /receitas/id', () => {
-	it('Deve retornar uma despesa', async () => {
-		const resposta = await request(app)
-			.get(`/receitas/${primeiroId}`)
-			.expect(200)
-
-		expect(resposta.body.valor).toEqual(800.8)
-	})
-})
-
 
 describe('GET em /receitas?busca=Busca', () => {
 	it('Deve retornar receitas buscadas por uma descrição', async () => {
 		const resposta = await request(app)
 			.get('/receitas?busca=Adiant')
+			.set('Authorization', 'Bearer ' + token)
 			.expect(200)
 
 
@@ -71,7 +70,8 @@ describe('GET em /receitas?busca=Busca', () => {
 describe('GET em /receitas/mes/ano', () => {
 	it('Deve retornar uma lista de receitas de um mes e ano especifico', async () => {
 		const resposta = await request(app)
-			.get('/receitas/07/2022')
+			.get('/receitas/11/2022')
+			.set('Authorization', 'Bearer ' + token)
 			.expect(200)
 
 		expect(resposta.body[2].descricao).toEqual('Vendas')
@@ -105,7 +105,8 @@ describe('PUT em /receitas/id', () => {
 			.put(`/receitas/${id}`)
 			.set('Authorization', 'Bearer ' + token)
 			.send({ descricao: 'teste atualizado' })
-		expect(resposta.body.message).toEqual(`A despesa ID: ${id}, foi atualizada`)
+
+		expect(resposta.body.message).toEqual('Receita atualizada')
 	})
 })
 
@@ -116,18 +117,7 @@ describe('DELETE em /receitas/id', () => {
 			.set('Authorization', 'Bearer ' + token)
 			.expect(200)
 
-		expect(resposta.body.message).toBe(`id ${id} deletado`)		
+		expect(resposta.body.message).toBe('Receita deletada')		
 	})
 })
 
-describe('POST em /receitas/id/restaura', () => {
-	it('Restaura uma receita deletada', async () => {
-		const resposta = await request(app)
-			.post(`/receitas/${id}/restaura`)
-			.set('Authorization', 'Bearer ' + token)
-			.expect(200)
-
-		expect(resposta.body.message).toEqual(`A receita id: ${id} foi restaurada com sucesso!`)
-	})
-
-})
