@@ -30,9 +30,12 @@ class UsuariosController {
 
 	static async verificaEmail(req, res) {
 		const id = req.user.id
+		const verificado = {
+			emailVerificado: true
+		}
 		try {
-			await database.Usuarios.update({emailVerificado: true}, { where: { id: Number(id) } })
-			res.status(200).json({ email: verificado })
+			await database.Usuarios.update(verificado, { where: { id: Number(id) } })
+			res.status(200).json({ message: 'verificado' })
 		} catch (erro) {
 			res.status(500).json({ erro: erro.message})
 		}

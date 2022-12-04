@@ -74,7 +74,7 @@ module.exports = {
 		try {
 			const { token } = req.params
 			const id = await tokens.verificacaoEmail.verifica(token)
-			const usuario = await database.Usuarios.findOne( { where: { id: Number(id) }})
+			const usuario = await database.Usuarios.findOne( { where: { id: Number(id) } })
 			req.user = usuario
 			req.id = id
 			next()
