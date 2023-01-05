@@ -12,8 +12,6 @@
 
 # API Controle Financeiro
 
-*******
-
   
 
 <div  id='objetivo'/>
