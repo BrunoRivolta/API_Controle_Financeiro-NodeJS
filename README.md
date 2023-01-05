@@ -1,10 +1,16 @@
+<!-- prettier-ignore -->
+| 🪧 Vitrine Dev |     |
+| ------------- | --- |
+| ✨ Nome        | API Controle Financeiro |
+| 🏷️ Tecnologias | NodeJs, Express, MySQL, Sequelize |
+| 🚀 URL Front-end | Veja como baixar e rodar localmente no item [**⚙️Instalação**](#howto) |
+| 🔥 Desafio     | https://www.alura.com.br/challenges/back-end |
+
+![](https://images2.imgbox.com/b1/4d/m2LdYYfs_o.png#vitrinedev)
+
+*******
+
 # API Controle Financeiro
-
-  
-
-<img  src="https://images2.imgbox.com/b1/4d/m2LdYYfs_o.png"  width="300px"/>
-
-  
 
 *******
 
@@ -27,6 +33,7 @@ As despesas podem ser cadastradas em 8 categorias: "Alimentação", "Saúde", "M
   
 
 A API tem também um sistema de autenticação de usuários que usa senhas criptografadas e gera tokens de acesso JWT.
+
 
   
 
