@@ -3,7 +3,7 @@
 | ------------- | --- |
 | ✨ Nome        | API Controle Financeiro |
 | 🏷️ Tecnologias | NodeJs, Express, MySQL, Sequelize |
-| 🚀 URL Front-end | Veja como baixar e rodar localmente no item [**⚙️Instalação**](#howto) |
+| 🚀 URL Front-end | Veja como baixar e rodar localmente no item [**⚙️Instalação**](#install) |
 | 🔥 Desafio     | https://www.alura.com.br/challenges/back-end |
 
 ![](https://images2.imgbox.com/b1/4d/m2LdYYfs_o.png#vitrinedev)
