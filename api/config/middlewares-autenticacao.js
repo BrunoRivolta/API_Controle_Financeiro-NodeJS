@@ -57,6 +57,7 @@ module.exports = {
 
 	async refresh (req, res, next) {
 		try {
+			console.log(req.body)
 			const { refreshToken } = req.body
 			const id = await tokens.refresh.verifica(refreshToken)
 			await tokens.refresh.invalida(refreshToken)

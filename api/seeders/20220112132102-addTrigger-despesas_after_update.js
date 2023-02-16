@@ -17,32 +17,43 @@ module.exports = {
     return sequelize.query(
       ` CREATE DEFINER = CURRENT_USER TRIGGER ${database}.despesas_AFTER_UPDATE AFTER UPDATE ON despesas FOR EACH ROW BEGIN` +
 
-      ' SET @categoria = OLD.categoria_id;' +
+      ' SET @categoria = NEW.categoria_id;' +
       ' SET @categoriaAntiga = OLD.categoria_id;' +
       ' SET @usuario = new.usuario_id;' +
       ' SET @ano = YEAR(new.data);' +
       ' SET @mes = MONTH(new.data);' +
-
       ` SET @despesaExiste = (SELECT EXISTS(SELECT mes FROM ${database}.relatorios where mes = @mes AND ano = @ano AND usuario_id = @usuario));` +
       ` SET @somaDespesas = (SELECT sum(valor) FROM ${database}.despesas WHERE YEAR(data) = @ano AND MONTH(data) = @mes AND usuario_id = @usuario);` +
       ` SET @somaCategoria = (SELECT sum(valor) FROM ${database}.despesas WHERE YEAR(data) = @ano AND MONTH(data) = @mes AND categoria_id = @categoria AND usuario_id = @usuario);` +
 
-      ' IF (@despesaExiste = FALSE) THEN' +
-        ` INSERT INTO ${database}.relatorios (mes, ano, receitas, despesas, usuario_id, createdAt, updatedAt) VALUES (@mes, @ano, 0, 0, @usuario, now(), now());` +
-      ' END IF;' +
+      ` IF (@despesaExiste = FALSE) THEN ` +
+        ` INSERT INTO ${database}.relatorios (mes, ano, receitas, despesas, usuario_id, alimentacao, saude, moradia, transporte, educacao, imprevistos, outros, lazer, createdAt, updatedAt) VALUES (@mes, @ano, 0, 0, @usuario, 0, 0, 0, 0 ,0 ,0, 0, 0, now(), now());` +
+      ` END IF;` +
 
       ` UPDATE ${database}.relatorios SET despesas = @somaDespesas WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
-      
-      ` IF (@categoriaAntiga) THEN SET @somaCategoriaAntiga = (SELECT sum(valor) FROM ${database}.despesas WHERE YEAR(data) = @ano AND MONTH(data) = @mes AND categoria_id = @categoriaAntiga AND usuario_id = @usuario); CASE` +
-        ` WHEN  @categoriaAntiga = 1 THEN UPDATE ${database}.relatorios SET alimentacao = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
-        ` WHEN  @categoriaAntiga = 2 THEN UPDATE ${database}.relatorios SET saude = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
-        ` WHEN  @categoriaAntiga = 3 THEN UPDATE ${database}.relatorios SET moradia = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
-        ` WHEN  @categoriaAntiga = 4 THEN UPDATE ${database}.relatorios SET transporte = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
-        ` WHEN  @categoriaAntiga = 5 THEN UPDATE ${database}.relatorios SET educacao = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
-        ` WHEN  @categoriaAntiga = 6 THEN UPDATE ${database}.relatorios SET lazer = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
-        ` WHEN  @categoriaAntiga = 7 THEN UPDATE ${database}.relatorios SET imprevistos = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
-        ` ELSE UPDATE ${database}.relatorios SET outros = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
-      ' END CASE; END IF;' +
+
+      ` IF (@categoriaAntiga) THEN` +
+        ` SET @somaCategoriaAntiga = (SELECT sum(valor) FROM ${database}.despesas WHERE YEAR(data) = @ano AND MONTH(data) = @mes AND categoria_id = @categoriaAntiga AND usuario_id = @usuario);` +
+        
+        ` IF (@somaCategoriaAntiga IS NULL) THEN` +
+          ` SET @somaCategoriaAntiga = 0;` +
+        ` END IF;` +
+
+        ` CASE` +
+          ` WHEN  @categoriaAntiga = 1 THEN UPDATE ${database}.relatorios SET alimentacao = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
+          ` WHEN  @categoriaAntiga = 2 THEN UPDATE ${database}.relatorios SET saude = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
+          ` WHEN  @categoriaAntiga = 3 THEN UPDATE ${database}.relatorios SET moradia = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
+          ` WHEN  @categoriaAntiga = 4 THEN UPDATE ${database}.relatorios SET transporte = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
+          ` WHEN  @categoriaAntiga = 5 THEN UPDATE ${database}.relatorios SET educacao = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
+          ` WHEN  @categoriaAntiga = 6 THEN UPDATE ${database}.relatorios SET lazer = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
+          ` WHEN  @categoriaAntiga = 7 THEN UPDATE ${database}.relatorios SET imprevistos = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
+          ` ELSE UPDATE ${database}.relatorios SET outros = @somaCategoriaAntiga WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
+        ` END CASE;`+
+      ` END IF;` +
+
+      ` IF (@somaCategoria IS NULL) THEN` +
+        ` SET @somaCategoria = 0;` +
+      ` END IF;` +
       
       ' CASE' +
         ` WHEN  @categoria = 1 THEN UPDATE ${database}.relatorios SET alimentacao = @somaCategoria WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +

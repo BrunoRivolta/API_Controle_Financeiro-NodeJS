@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@300&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <title>Ajuda Swagger API Controle Financeiro    </title>
+</head>
+<style type="text/css">
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5 {
+    margin: 5px;
+  }
+
+  p {
+    margin: 2px;
+  }
+
+  main {
+    margin: 0 10%;
+    padding: 15px;
+  }
+
+  .secao {
+    padding-bottom: 20px;
+  }
+
+  .codigo{
+    padding: 14px;
+    background-color: #2b2b2b;
+    color: #FFFFFF;
+    margin: 10px;
+    font-family: 'Encode Sans SC', sans-serif;
+    font-size: 12px;
+    border-radius: 5px;
+  }
+
+  .destaque {
+    color: #ffe600;
+  }
+
+  .recuo {
+    text-indent: 2em;
+  }
+
+</style>
+<body>
+  <main>
+    <div class="secao">
+      <h1>API Controle Financeiro</h1>
+      <p>Seja bem vindo(a) a documentação da API Controle Financeiro</p>
+    </div>
+    <div class="secao">
+      <h2>Ajuda</h2>
+      <p>Este documento visa ajudar o usuário a usar a documentação swagger desta api.</p>
+      <p>Qualquer outra duvida entre em contato com o <a href="mailto:brrivolta@gmail.com">Desenvolvedor</a></p>
+    </div>
+    <div class="secao">
+      <h3>Autorizações</h3>
+      <p>A api tem um sistema de autorização na maioria das rotas, para acessa-las é necessário fornecer o AccessToken.</p>
+    </div>
+    <div class="secao">
+      <h3>Como conseguir um AcessToken?</h3>
+      <p>O accessToken é obtido no login. Faça login na aplicação pela rota <b>"POST /usuarios/login"</b>, aperte o botão <b>"Try it out"</b> e depois aperte o botão azul <b>"Execute"</b></p>
+    </div>
+    <div class="secao">
+      <p>O login será feito com a conta de teste padrão:</p>
+      <div class="codigo">
+        <p>{</p>
+        <p class="recuo">"email": "teste@teste.com",</p>
+        <p class="recuo">"senha": "123456"</p>
+        <p>}</p>
+      </div>
+    </div>
+    <h4>Receberemos em resposta os dados abaixo:</h4>
+    <h5>Response body:</h5>
+    <div class="codigo">
+      <p>{</p>
+      <p class="destaque recuo">"refreshToken": "gekasvsafdngasldnkasdfWI",</p>
+      <p class="recuo">"nomeUsuario": "Usuário Teste"</p>
+      <p>}</p>
+    </div>
+    <h5>Response headers:</h5>
+    <div class="codigo">
+      <p>access-control-allow-headers: Origin,X-Requested-With,Content-Type,Accept</p>
+      <p>access-control-allow-origin: *</p>
+      <p class="destaque">authorization: eghryukfghdfgthryutuijrtnjetryjrtyjtrythreth</p>
+      <p>connection: keep-alive</p>
+      <p>content-length: 100</p>
+      <p>content-type: application/json; charset=utf-8</p>
+      <p>date: Thu,16 Feb 2023 11:31:14 GMT</p>
+      <p>etag: W/"64-JmbynJoKQROt50gYDTpomXrmWBk"</p>
+      <p>keep-alive: timeout=5</p>
+      <p>x-powered-by: Express</p>
+    </div>
+    <div class="secao">
+      <p>Note que recebemos o <b>AccessToken</b> no Headers > authorization</p>
+      <p>E tambem recebemos o <b>RefreshToken</b> no Body > "refreshToken"</p>
+    </div>
+    <div class="secao">
+      <h2>Autorizando todas as Rotas com o AccessToken</h2>
+      <p>Copie códido do AcessTokem. Aperte o botão verde <b>"Authorize"</b> que esta no canto direito acima das rotas.</p>
+      <p>Cole o codigo e aperte o botão <b>"Authorize"</b> e depois o botão <b>"Close"</b></p>
+      <p>Agora todas as rotas estão autorizadas!</p>
+    </div>
+    <div class="secao">
+      <h2>Usando o RefreshToken</h2>
+      <p>Quando o AccessToken expira precisamos renova-lo. Copie o refreshToken recebido no login.</p>
+      <p>Use a rota <b>"POST /usuarios/atualiza_refresh"</b>, aperte o botão <b>"Try it out"</b>, cole o refreshToken no Body e depois aperte o botão azul <b>"Execute"</b></p>
+      <p>Em resposta receberemos um novo AccessToken e também um novo refreshToken. Faça novamente a autorização com o AccessTokem</p>
+    </div>
+  </main>
+</body>
+</html>

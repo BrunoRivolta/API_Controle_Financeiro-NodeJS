@@ -33,6 +33,14 @@ module.exports = (sequelize, DataTypes) => {
 				}
 			}
 		},
+		sobrenome: DataTypes.STRING,
+		telefone: DataTypes.STRING,
+		cep: DataTypes.STRING,
+		endereco: DataTypes.STRING,
+		numero: DataTypes.INTEGER,
+		bairro: DataTypes.STRING,
+		cidade: DataTypes.STRING,
+		estado: DataTypes.STRING,
 		senha: DataTypes.STRING,
 		emailVerificado: {
 			type: DataTypes.BOOLEAN

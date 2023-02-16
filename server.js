@@ -1,6 +1,12 @@
+const http = require('http');
 const app = require('./api/app')
+const endereco = process.env.BASE_URL
 
-const port = 3000
+const regex = /[0-9]+$/gm
 
+const port = (regex.exec(endereco))[0]
 
-app.listen(port, () => console.log(`Servidor funcionando na porta ${port}`)) //ouvindo o servidor para dizer se esta ok se esta funcionando
+http.createServer(app).listen(port, function() {
+	console.log(`Servidor funcionando na porta ${port}`)
+	console.log(`Acesse: http://${endereco}`)
+});

@@ -1,0 +1,17 @@
+.principal {
+    height: 100vh;
+}
+
+.dados-usuario {
+    margin: 30px 10%;
+}
+
+.footer-usuarios {
+    width: 100%;
+}
+
+@media screen and (max-width: 430px) {
+    .principal {
+        height: auto;
+    }
+}

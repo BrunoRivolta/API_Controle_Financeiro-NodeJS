@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 const passport = require('passport')
 const BearerStrategy = require('passport-http-bearer').Strategy
 const tokens = require('../controllers/tokens')
+const geraEmailVerificacao = require('../verifEmail/emailVerificacao')
 
 function verificaUsuario(usuario) {
 	if(!usuario) {
@@ -22,10 +23,10 @@ async function verificaSenha(senha, senhaHash) {
 async function vefiricaEmailValidado(usuario) {
 	const validado = usuario.emailVerificado
 	if (validado === false) {
-		throw new InvalidArgumentError('Email não foi validado, verifique sua caixa de e-mail')		
+		geraEmailVerificacao(usuario)
+		throw new InvalidArgumentError('Enviamos um novo e-mail de verificação, aguarde alguns minutos e verifique sua caixa de e-mail, veja também na caixa de spam!')		
 	}
 }
-
 
 module.exports = function(passport) {
 	passport.use(

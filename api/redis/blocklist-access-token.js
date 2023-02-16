@@ -3,7 +3,12 @@ const { createHash } = require('crypto')
 const manipulaLista = require('./manipula-lista')
 const redis = require('redis')
 
-const blocklist = redis.createClient({ prefix: 'blocklist-acessToken: ', legacyMode: true})
+const blocklist = redis.createClient({
+	//url: 'redis://127.0.0.1:3010',
+	prefix: 'blocklist-acessToken: ',
+	legacyMode: true
+})
+
 const manipulaBlockList = manipulaLista(blocklist)
 
 function geraTokenHash (token) { //os tokens tem varios tamanho, essa funcao transforma o token em um hash com tamanho fixo

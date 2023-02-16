@@ -1,4 +1,3 @@
-<!-- prettier-ignore -->
 | 🪧 Vitrine Dev |     |
 | ------------- | --- |
 | ✨ Nome        | API Controle Financeiro |

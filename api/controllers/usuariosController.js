@@ -1,18 +1,19 @@
 const database = require('../models')
 const tokens = require('./tokens')
-const { EmailVerificacao, EmailRecuperacao } = require('../verifEmail/email')
+const { EmailRecuperacao } = require('../verifEmail/email')
 const geraSenhaHash = require('./senhaHash')
 const geraEndereco = require('../verifEmail/geraEndereco')
-
+const geraEmailVerificacao = require('../verifEmail/emailVerificacao')
 
 class UsuariosController {
 
 	static async login (req, res) {
 		try {
 			const acessToken = tokens.access.cria(req.user.id)
+			const nomeUsuario = req.user.nome
 			const refreshToken = await tokens.refresh.cria(req.user.id)
 			res.set('Authorization', acessToken)
-			res.status(200).send({ refreshToken })
+			res.status(200).send({ refreshToken, nomeUsuario })
 		} catch (erro) {
 			res.status(500).json({ erro: erro.message })
 		}
@@ -35,7 +36,7 @@ class UsuariosController {
 		}
 		try {
 			await database.Usuarios.update(verificado, { where: { id: Number(id) } })
-			res.status(200).json({ message: 'verificado' })
+			res.status(200).redirect('http://127.0.0.1:3001')
 		} catch (erro) {
 			res.status(500).json({ erro: erro.message})
 		}
@@ -48,13 +49,21 @@ class UsuariosController {
 			dadosNovoUsuario.senha = senhaHash
 			const usuario = await database.Usuarios.create(dadosNovoUsuario)
 
-			const tokenVerificaEmail = tokens.verificacaoEmail.cria(usuario.id)
-			const endereco = geraEndereco('/usuarios/verifica_email/', tokenVerificaEmail)
-			const emailVerificacao = new EmailVerificacao(usuario, endereco)
-			emailVerificacao.enviaEmail()
+			geraEmailVerificacao(usuario)
+			usuario.senha = null
 
 			res.status(201).json(usuario)
 		} catch(err) {
+			res.status(500).json({ message: err.message })
+		}
+	}
+
+	static async listaUsuario(req, res) {
+		try {
+			const userId = req.user.id
+			const usuario = await database.Usuarios.findAll({ where: { id: Number(userId) } })
+			res.status(200).json(usuario)  
+		} catch (err) {
 			res.status(500).json({ message: err.message })
 		}
 	}

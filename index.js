@@ -3,6 +3,6 @@ require('dotenv').config()
 require('./api/redis/blocklist-access-token')
 require('./api/redis/allowlist-refresh-token')
 
-const port = 3000
+const port = 3001
 
 app.listen(port, () => console.log(`Servidor funcionando na porta ${port}`)) //ouvindo o servidor para dizer se esta ok se esta funcionando

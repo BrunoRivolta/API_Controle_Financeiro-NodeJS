@@ -23,7 +23,11 @@ module.exports = {
       ` SET @mes = MONTH(OLD.data);` +
       ` SET @somaDespesas = (SELECT sum(valor) FROM ${database}.despesas WHERE YEAR(data) = @ano AND MONTH(data) = @mes AND usuario_id = @usuario);` +
       ` SET @somaCategoria = (SELECT sum(valor) FROM ${database}.despesas WHERE YEAR(data) = @ano AND MONTH(data) = @mes AND categoria_id = @categoria AND usuario_id = @usuario);` +
-      
+
+      ` IF (@somaCategoria IS NULL) THEN` +
+        ` SET @somaCategoria = 0;` +
+      ` END IF;` +
+
       ` IF (@somaDespesas) THEN` +
         ` UPDATE ${database}.relatorios SET despesas = @somaDespesas WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +
       ` ELSE` +

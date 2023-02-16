@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
 	async up(queryInterface, Sequelize) {
-		await queryInterface.createTable('Relatorios', {
+		await queryInterface.createTable('relatorios', {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
@@ -31,39 +31,47 @@ module.exports = {
 			usuario_id: {
 				allowNull: false,
 				type: Sequelize.INTEGER,
-				references: { model: 'Usuarios', key: 'id'}
+				references: { model: 'usuarios', key: 'id'}
 			},
 			alimentacao: {
 				type: Sequelize.FLOAT,
-				defaultValue: 0
+				defaultValue: 0,
+				allowNull: false
 			},
 			saude: {
 				type: Sequelize.FLOAT,
-				defaultValue: 0
+				defaultValue: 0,
+				allowNull: false
 			},
 			moradia: {
 				type: Sequelize.FLOAT,
-				defaultValue: 0
+				defaultValue: 0,
+				allowNull: false
 			},
 			transporte: {
 				type: Sequelize.FLOAT,
-				defaultValue: 0
+				defaultValue: 0,
+				allowNull: false
 			},
 			educacao: {
 				type: Sequelize.FLOAT,
-				defaultValue: 0
+				defaultValue: 0,
+				allowNull: false
 			},
 			lazer: {
 				type: Sequelize.FLOAT,
-				defaultValue: 0
+				defaultValue: 0,
+				allowNull: false
 			},
 			imprevistos: {
 				type: Sequelize.FLOAT,
-				defaultValue: 0
+				defaultValue: 0,
+				allowNull: false
 			},
 			outros: {
 				type: Sequelize.FLOAT,
-				defaultValue: 0
+				defaultValue: 0,
+				allowNull: false
 			},
 			createdAt: {
 				allowNull: false,
@@ -78,6 +86,6 @@ module.exports = {
 		})
 	},
 	async down(queryInterface, Sequelize) {
-		await queryInterface.dropTable('Relatorios')
+		await queryInterface.dropTable('relatorios')
 	}
 }

@@ -20,7 +20,7 @@ module.exports = {
       ` SET @ano = YEAR(OLD.data);` +
       ` SET @mes = MONTH(OLD.data);` +
       ` SET @usuario = OLD.usuario_id;` +
-      ` SET @somaReceitas = (SELECT sum(valor) FROM ${database}.receitas WHERE YEAR(data) = @ano AND MONTH(data) = @mes);` +
+      ` SET @somaReceitas = (SELECT sum(valor) FROM ${database}.receitas WHERE YEAR(data) = @ano AND MONTH(data) = @mes AND @usuario = usuario_id);` +
       
       ` IF (@somaReceitas) THEN` +
         ` UPDATE ${database}.relatorios SET receitas = @somaReceitas WHERE ano = @ano and mes = @mes and usuario_id = @usuario;` +

@@ -53,7 +53,7 @@ class EmailVerificacao extends Email {
 			<h1>Olá</h1>
 			<p>Sua conta no "Controle Financeiro" foi criada com Sucesso!</p>
 			<p>Para sua segurança é necessario confirmar seu email. Use o link abaixo</p>
-			<p>Verifique seu e-mail aqui: <a href='${endereco}'>${endereco}</a></p>
+			<p>Verifique seu e-mail aqui: <a href='http://${endereco}'>${endereco}</a></p>
 			<p>Nao responda esse email</p>
 			<br/>
 			<p>API Controle Financeiro - Bruno Rivolta</p>
@@ -79,7 +79,7 @@ class EmailRecuperacao extends Email {
 			<h1>Olá</h1>
 			<p>Sua conta no "Controle Financeiro" foi Apagada com Sucesso!</p>
 			<p>É possivel recuperar sua conta após 5 dias depois da exclusão. Use o link abaixo</p>
-			<p>Recupere sua cona aqui: <a href='${endereco}'>${endereco}</a></p>
+			<p>Recupere sua cona aqui: <a href='http://${endereco}'>${endereco}</a></p>
 			<p>Nao responda esse email</p>
 			<br/>
 			<p>API Controle Financeiro - Bruno Rivolta</p>

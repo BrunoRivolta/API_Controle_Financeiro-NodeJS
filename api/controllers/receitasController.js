@@ -44,7 +44,7 @@ class ReceitasController {
 			if(resultadoReceitas.length > 0)  {
 				res.status(200).json(resultadoReceitas)  
 			} else {
-				res.status(200).json({Busca: `Não foi encontrado resutado para: ${mes}/${ano}`})
+				res.status(204).json({Busca: `Não foi encontrado resutado para: ${mes}/${ano}`})
 			}
 		} catch (err) {
 			res.status(500).json({ message: err.message })

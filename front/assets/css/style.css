@@ -1,0 +1,39 @@
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #c82980;
+    background-image: linear-gradient(225deg, #c82980 0%, #784BA0 50%, #1a6091 100%);
+}
+
+.alerta-msg-y {
+    color: #e9c110;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.alerta-msg-v {
+    color: #ff5100;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.spinner{
+    display: none;
+}
+
+.tatela_categoria {
+    display: block;
+}
+
+.botao_modal{
+    display: block;
+} 
+
+.material-symbols-outlined {
+    font-size: 20px;
+}
+
+.card-body {
+    padding: 5px;
+}
+
