@@ -46,7 +46,8 @@ class UsuariosController {
 		try{
 			const dadosNovoUsuario = req.body
 			const senhaHash = await geraSenhaHash(dadosNovoUsuario.senha)
-			dadosNovoUsuario.senha = senhaHash
+			dadosNovoUsuario.senha = senhaHash 
+			dadosNovoUsuario.emailVerificado = true //o email não precisa ser verificado 
 			const usuario = await database.Usuarios.create(dadosNovoUsuario)
 
 			geraEmailVerificacao(usuario)

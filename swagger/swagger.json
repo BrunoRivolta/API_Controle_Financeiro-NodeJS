@@ -21,11 +21,11 @@
         {
             "url": "http://localhost:3001",
             "description": "API local (teste)"
-        },
+        }
     ],
     "paths":{
         "/usuarios/login":{
-            "post":{
+            "post": {
                 "summary":"Faz o login dos usuários",
                 "description":"Rota usada para fazer login",
                 "tags":["Usuários"],
@@ -100,8 +100,8 @@
                 }
             }
         },
-        "/usuarios/logout":{
-            "post":{
+        "/usuarios/logout": {
+            "post": {
                 "summary":"Faz o logout dos usuários",
                 "description":"Rota usada para fazer logout",
                 "tags":["Usuários"],
@@ -126,11 +126,11 @@
                         }
                     }
                 },
-                "responses":{
-                    "204":{
+                "responses": {
+                    "204": {
                         "description":"No Content - 'Logout Feito com Sucesso'"
                     },
-                    "401":{
+                    "401": {
                         "description":"Unauthorized",
                         "content": {
                             "application/json": {
@@ -144,7 +144,7 @@
                             }
                         }
                     },
-                    "500":{
+                    "500": {
                         "description":"Internal Server Error",
                         "content": {
                             "application/json": {
@@ -161,11 +161,11 @@
                 }
             }
         },
-        "/usuarios":{
-            "get":{
+        "/usuarios": { 
+            "get": {
                 "summary":"Mostra os dados do usuário",
                 "description":"Rota usada para trazer as informações do usuário",
-                "tags":["Usuários"],
+                "tags": ["Usuários"],
                 "security": [{ "bearerAuth": [] }],
                 "responses":{
                     "200":{
@@ -178,7 +178,7 @@
                             }
                         }
                     },
-                    "401":{
+                    "401": {
                         "description":"Unauthorized",
                         "content": {
                             "application/json": {
@@ -192,7 +192,7 @@
                             }
                         }
                     },
-                    "500":{
+                    "500": {
                         "description":"Internal Server Error",
                         "content": {
                             "application/json": {
@@ -208,10 +208,10 @@
                     }
                 }
             },
-            "post":{
-                "summary":"Cadastra um novo usuário",
-                "description":"Rota usada para fazer o cadastro de novos usuários",
-                "tags":["Usuários"],
+            "post": {
+                "summary": "Cadastra um novo usuário",
+                "description":" Rota usada para fazer o cadastro de novos usuários",
+                "tags": ["Usuários"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -240,8 +240,8 @@
                         }
                     }
                 },
-                "responses":{
-                    "201":{
+                "responses": {
+                    "201": {
                         "description":"Created",
                         "content": {
                             "application/json": {
@@ -260,8 +260,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -274,8 +274,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -290,10 +290,10 @@
                     }
                 }
             },
-            "put":{
-                "summary":"Atualiza dados do usuário",
-                "description":"Rota usada para atualizar o cadastro de usuários",
-                "tags":["Usuários"],
+            "put": {
+                "summary": "Atualiza dados do usuário",
+                "description": "Rota usada para atualizar o cadastro de usuários",
+                "tags": ["Usuários"],
                 "security": [{ "bearerAuth": [] }], 
                 "requestBody": {
                     "content": {
@@ -315,9 +315,9 @@
                         }
                     }
                 },
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -330,8 +330,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -344,8 +344,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -362,10 +362,10 @@
             }
         },
         "/usuarios/atualiza_refresh": {
-            "post":{
-                "summary":"Atualiza o refresh token quando o mesmo expira",
-                "description":"Rota usada para atualizar o refresh tokent",
-                "tags":["Usuários"],
+            "post": {
+                "summary":" Atualiza os tokens de acesso quando os mesmos expiram",
+                "description": "Rota usada para atualizar os tokens de acesso",
+                "tags": ["Usuários"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -386,9 +386,9 @@
                         }
                     }
                 },
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -402,8 +402,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -416,8 +416,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -433,8 +433,8 @@
                 }
             }
         },
-        "/receitas":{
-            "post":{
+        "/receitas": {
+            "post": {
                 "summary":"Cadastra uma nova receita.",
                 "description":"Rota usada para fazer o cadastro de receitas",
                 "tags":["Receitas"],
@@ -457,9 +457,9 @@
                         }
                     }
                 },
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -468,8 +468,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -482,8 +482,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -498,14 +498,14 @@
                     }
                 }
             },
-            "get":{
-                "summary":"Mostra todas as receitas cadastradas",
-                "description":"Rota usada para visualizar todas as receitas",
-                "tags":["Receitas"],
+            "get": {
+                "summary": "Mostra todas as receitas cadastradas",
+                "description": "Rota usada para visualizar todas as receitas",
+                "tags": ["Receitas"],
                 "security": [{ "bearerAuth": [] }],
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -514,8 +514,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -528,8 +528,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -545,36 +545,36 @@
                 }
             }
         },
-        "/receitas/{mes}/{ano}":{
-            "get":{
-                "summary":"Mostra as receitas cadastradas em determinado mês e ano",
-                "description":"Rota usada para visualizar as receitas de determinado mês e ano",
-                "tags":["Receitas"],
+        "/receitas/{mes}/{ano}": {
+            "get": {
+                "summary": "Mostra as receitas cadastradas em determinado mês e ano",
+                "description": "Rota usada para visualizar as receitas de determinado mês e ano",
+                "tags": ["Receitas"],
                 "security": [{ "bearerAuth": [] }],
-                "produces":[
+                "produces": [
                     "application/json"
                  ],
-                 "parameters":[
+                 "parameters": [
                     {
-                       "name":"mes",
-                       "in":"path",
-                       "description":"Mês para pesquisa",
-                       "required":true,
-                       "type":"integer",
-                       "format":"int64"
+                       "name": "mes",
+                       "in": "path",
+                       "description": "Mês para pesquisa",
+                       "required": true,
+                       "type": "integer",
+                       "format": "int64"
                     },
                     {
-                        "name":"ano",
-                        "in":"path",
-                        "description":"Ano para pesquisa",
-                        "required":true,
-                        "type":"integer",
-                        "format":"int64"
+                        "name": "ano",
+                        "in": "path",
+                        "description": "Ano para pesquisa",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
                      }
                  ],
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -583,8 +583,8 @@
                             }
                         }
                     },
-                    "204":{
-                        "description":"No Content",
+                    "204": {
+                        "description": "No Content",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -597,8 +597,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -611,8 +611,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -628,27 +628,27 @@
                 }
             }
         },
-        "/receitas?busca={busca}":{
-            "get":{
-                "summary":"Mostra as receitas cadastradas em determinado mês e ano",
-                "description":"Rota usada para visualizar as receitas de determinado mês e ano",
-                "tags":["Receitas"],
+        "/receitas?busca={busca}": {
+            "get": {
+                "summary": "Pesquisa receitas",
+                "description": "Rota usada para pesquisar receitas de acordo com a descrição",
+                "tags": ["Receitas"],
                 "security": [{ "bearerAuth": [] }],
-                "produces":[
+                "produces": [
                     "application/json"
                  ],
-                 "parameters":[
+                 "parameters": [
                     {
                        "name":"busca",
-                       "in":"path",
-                       "description":"Parâmetro de busca",
-                       "required":true,
-                       "type":"string"
+                       "in": "path",
+                       "description": "Parâmetro de busca",
+                       "required" :true,
+                       "type": "string"
                     }
                  ],
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -657,8 +657,8 @@
                             }
                         }
                     },
-                    "204":{
-                        "description":"No Content",
+                    "204": {
+                        "description": "No Content",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -671,8 +671,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -685,8 +685,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -703,15 +703,15 @@
             }
         },
         "/receitas/{id}": {
-            "put":{
-                "summary":"Atualiza receitas pelo id",
-                "description":"Rota usada para atualizar receitas informando o id",
-                "tags":["Receitas"],
+            "put": {
+                "summary": "Atualiza receitas pelo id",
+                "description": "Rota usada para atualizar receitas informando o id",
+                "tags": ["Receitas"],
                 "security": [{ "bearerAuth": [] }],
-                "produces":[
+                "produces": [
                     "application/json"
                  ],
-                 "parameters":[
+                 "parameters": [
                     {
                        "name":"id",
                        "in":"path",
@@ -736,9 +736,9 @@
                         }
                     }
                 },
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -751,8 +751,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -765,8 +765,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -781,26 +781,26 @@
                     }
                 }
             },
-            "delete":{
-                "summary":"Deleta receitas pelo id",
-                "description":"Rota usada para apagar receitas informando o id",
-                "tags":["Receitas"],
+            "delete": {
+                "summary": "Deleta receitas pelo id",
+                "description": "Rota usada para apagar receitas informando o id",
+                "tags": ["Receitas"],
                 "security": [{ "bearerAuth": [] }],
-                "produces":[
+                "produces": [
                     "application/json"
                  ],
                  "parameters":[
                     {
-                       "name":"id",
-                       "in":"path",
-                       "description":"id da receita",
-                       "required":true,
-                       "type":"integer"
+                       "name": "id",
+                       "in": "path",
+                       "description": "id da receita",
+                       "required": true,
+                       "type": "integer"
                     }
                  ],
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -813,8 +813,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -828,7 +828,7 @@
                         }
                     },
                     "500":{
-                        "description":"Internal Server Error",
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -844,11 +844,11 @@
                 }
             }
         },
-        "/despesas":{
-            "post":{
-                "summary":"Cadastra uma nova despesas",
-                "description":"Rota usada para fazer o cadastro de despesas",
-                "tags":["Despesas"],
+        "/despesas": {
+            "post": {
+                "summary": "Cadastra uma nova despesas",
+                "description": "Rota usada para fazer o cadastro de despesas",
+                "tags": ["Despesas"],
                 "security": [{ "bearerAuth": [] }],
                 "requestBody": {
                     "content": {
@@ -869,9 +869,9 @@
                         }
                     }
                 },
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -880,8 +880,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -894,8 +894,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -910,14 +910,14 @@
                     }
                 }
             },
-            "get":{
-                "summary":"Mostra todas as despesas cadastradas",
-                "description":"Rota usada para visualizar todas as despesas",
-                "tags":["Despesas"],
+            "get": {
+                "summary": "Mostra todas as despesas cadastradas",
+                "description": "Rota usada para visualizar todas as despesas",
+                "tags": ["Despesas"],
                 "security": [{ "bearerAuth": [] }],
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -926,8 +926,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -940,8 +940,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -957,36 +957,36 @@
                 }
             }
         },
-        "/despesas/{mes}/{ano}":{
-            "get":{
-                "summary":"Mostra as despesas cadastradas em determinado mês e ano",
-                "description":"Rota usada para visualizar as despesas de determinado mês e ano",
-                "tags":["Despesas"],
+        "/despesas/{mes}/{ano}": {
+            "get": {
+                "summary": "Mostra as despesas cadastradas em determinado mês e ano",
+                "description": "Rota usada para visualizar as despesas de determinado mês e ano",
+                "tags": ["Despesas"],
                 "security": [{ "bearerAuth": [] }],
-                "produces":[
+                "produces": [
                     "application/json"
                  ],
-                 "parameters":[
+                 "parameters": [
                     {
                        "name":"mes",
                        "in":"path",
-                       "description":"Mês para pesquisa",
-                       "required":true,
-                       "type":"integer",
-                       "format":"int64"
+                       "description": "Mês para pesquisa",
+                       "required": true,
+                       "type": "integer",
+                       "format": "int64"
                     },
                     {
-                        "name":"ano",
-                        "in":"path",
-                        "description":"Ano para pesquisa",
-                        "required":true,
-                        "type":"integer",
-                        "format":"int64"
+                        "name": "ano",
+                        "in": "path",
+                        "description":" Ano para pesquisa",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
                      }
                  ],
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -995,8 +995,8 @@
                             }
                         }
                     },
-                    "204":{
-                        "description":"No Content",
+                    "204": {
+                        "description": "No Content",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1009,8 +1009,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1023,8 +1023,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1040,27 +1040,27 @@
                 }
             }
         },
-        "/despesas?busca={busca}":{
-            "get":{
-                "summary":"Mostra as despesas cadastradas em determinado mês e ano",
-                "description":"Rota usada para visualizar as despesas de determinado mês e ano",
-                "tags":["Despesas"],
+        "/despesas?busca={busca}": {
+            "get": {
+                "summary": "Pesquisa despesas",
+                "description": "Rota usada para pesquisar despesas de acordo com a descrição",
+                "tags": ["Despesas"],
                 "security": [{ "bearerAuth": [] }],
-                "produces":[
+                "produces": [
                     "application/json"
                  ],
                  "parameters": [
                     {
-                       "name":"busca",
-                       "in":"path",
-                       "description":"Parâmetro de busca",
-                       "required":true,
-                       "type":"string"
+                       "name": "busca",
+                       "in": "path",
+                       "description": "Parâmetro de busca",
+                       "required": true,
+                       "type": "string"
                     }
                  ],
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1069,7 +1069,7 @@
                             }
                         }
                     },
-                    "204":{
+                    "204": {
                         "description":"No Content",
                         "content": {
                             "application/json": {
@@ -1083,8 +1083,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1097,8 +1097,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1115,21 +1115,21 @@
             }
         },
         "/despesas/{id}": {
-            "put":{
-                "summary":"Atualiza despesas pelo id",
-                "description":"Rota usada para atualizar despesas informando o id",
-                "tags":["Despesas"],
+            "put": {
+                "summary": "Atualiza despesas pelo id",
+                "description": "Rota usada para atualizar despesas informando o id",
+                "tags": ["Despesas"],
                 "security": [{ "bearerAuth": [] }],
-                "produces":[
+                "produces": [
                     "application/json"
                  ],
-                 "parameters":[
+                 "parameters": [
                     {
-                       "name":"id",
-                       "in":"path",
-                       "description":"id da receita",
-                       "required":true,
-                       "type":"integer"
+                       "name": "id",
+                       "in": "path",
+                       "description": "id da receita",
+                       "required": true,
+                       "type": "integer"
                     }
                  ],
                  "requestBody": {
@@ -1148,9 +1148,9 @@
                         }
                     }
                 },
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1163,8 +1163,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1177,8 +1177,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1194,25 +1194,25 @@
                 }
             },
             "delete":{
-                "summary":"Deleta despesas pelo id",
-                "description":"Rota usada para apagar despesas informando o id",
-                "tags":["Despesas"],
+                "summary": "Deleta despesas pelo id",
+                "description": "Rota usada para apagar despesas informando o id",
+                "tags": ["Despesas"],
                 "security": [{ "bearerAuth": [] }],
-                "produces":[
+                "produces": [
                     "application/json"
                  ],
-                 "parameters":[
+                 "parameters": [
                     {
-                       "name":"id",
-                       "in":"path",
-                       "description":"id da despesa",
-                       "required":true,
-                       "type":"integer"
+                       "name": "id",
+                       "in": "path",
+                       "description": "id da despesa",
+                       "required": true,
+                       "type": "integer"
                     }
                  ],
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1225,8 +1225,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1239,8 +1239,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1257,14 +1257,14 @@
             }
         },
         "/relatorio": {
-            "get":{
-            "summary":"Mostra todos os relatórios gerados.",
-                "description":"Rota usada para visualizar todos os relatórios",
-                "tags":["Relatórios"],
+            "get": {
+            "summary": "Mostra todos os relatórios",
+                "description": "Rota usada para visualizar todos os relatórios",
+                "tags": ["Relatórios"],
                 "security": [{ "bearerAuth": [] }],
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1273,8 +1273,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1287,8 +1287,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1304,36 +1304,36 @@
                 }
             }
         },
-        "/relatorio/{mes}/{ano}":{
-            "get":{
-                "summary":"Mostra o relatório cadastrado em determinado mês e ano",
-                "description":"Rota usada para visualizar o relatório de determinado mês e ano",
-                "tags":["Relatórios"],
+        "/relatorio/{mes}/{ano}": {
+            "get": {
+                "summary": "Mostra o relatório cadastrado em determinado mês e ano",
+                "description": "Rota usada para visualizar o relatório de determinado mês e ano",
+                "tags": ["Relatórios"],
                 "security": [{ "bearerAuth": [] }],
-                "produces":[
+                "produces": [
                     "application/json"
                  ],
-                 "parameters":[
+                 "parameters": [
                     {
-                       "name":"mes",
-                       "in":"path",
-                       "description":"Mês para pesquisa",
-                       "required":true,
-                       "type":"integer",
-                       "format":"int64"
+                       "name": "mes",
+                       "in": "path",
+                       "description": "Mês para pesquisa",
+                       "required": true,
+                       "type": "integer",
+                       "format": "int64"
                     },
                     {
-                        "name":"ano",
-                        "in":"path",
-                        "description":"Ano para pesquisa",
-                        "required":true,
-                        "type":"integer",
-                        "format":"int64"
+                        "name": "ano",
+                        "in": "path",
+                        "description": "Ano para pesquisa",
+                        "required" :true,
+                        "type": "integer",
+                        "format": "int64"
                      }
                  ],
-                "responses":{
-                    "200":{
-                        "description":"OK",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1342,8 +1342,8 @@
                             }
                         }
                     },
-                    "204":{
-                        "description":"No Content",
+                    "204": {
+                        "description": "No Content",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1356,8 +1356,8 @@
                             }
                         }
                     },
-                    "401":{
-                        "description":"Unauthorized",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "examples": {
@@ -1370,8 +1370,8 @@
                             }
                         }
                     },
-                    "500":{
-                        "description":"Internal Server Error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "examples": {
